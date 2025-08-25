@@ -23,4 +23,4 @@ pool.connect((err) => {
   }
 });
 
-module.exports = config;
+module.exports = pool;
