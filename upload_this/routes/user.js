@@ -1,7 +1,9 @@
-const router = require("express").Router();
+
 const { query } = require("../database/dbpromise.js");
 const randomstring = require("randomstring");
 const bcrypt = require("bcrypt");
+const router = express.Router();
+const pool = require('../db');
 const {
   isValidEmail,
   getFileExtension,
@@ -2651,6 +2653,16 @@ router.post("/send_template_message", validateUser, async (req, res) => {
       msg: "Something went wrong while sending the template",
       error: err.message,
     });
+  }
+});
+
+router.get('/users', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM users');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erro no servidor');
   }
 });
 
