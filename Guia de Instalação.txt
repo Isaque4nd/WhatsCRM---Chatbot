@@ -1,0 +1,42 @@
+Requisitos:
+Hospedagem compartilhada com suporte a Node.js App Maker ou VPS (recomendado)
+
+Banco de dados MySQL
+
+Domínio ou Subdomínio
+
+Crie a aplicação com Node [20.18.3] ou superior executando o arquivo server.js (localizado na raiz do seu VPS), e inicie na porta que você configurou no .env.
+Veja o vídeo tutorial de instalação:
+https://www.youtube.com/watch?v=FbAbltEPDHQ
+
+ESTE É O PASSO MAIS IMPORTANTE E EXIGE MUITA ATENÇÃO E CUIDADO!
+Passo 1:
+Antes de enviar os arquivos para o seu servidor, descompacte-os em uma pasta no seu computador e edite o arquivo main.e694f0ef.js localizado na pasta:
+..client/public/static/js/
+
+Procure e substitua as 7 linhas: yourdomain.com pelo seu próprio domínio.
+
+Passo 2:
+Crie um banco de dados MySQL no seu VPS e importe o arquivo import.sql que está dentro da pasta database.
+
+Passo 3:
+Preencha todas as configurações no arquivo .env que está dentro da pasta upload_this com os seus parâmetros:
+
+(Deixe as variáveis como estão no texto original, só configure os valores conforme seu ambiente)
+
+Passo 4:
+Depois de fazer essas configurações na sua máquina local (exceto o passo 2), compacte a pasta onde você fez as alterações referentes ao Passo 1 e Passo 3 (se não renomeou, o nome da pasta será upload_this), envie para o seu VPS e descompacte na raiz.
+
+Passo 5:
+Crie a aplicação com Node [20.18.3] ou superior executando o arquivo server.js (localizado na raiz do seu VPS), e inicie na porta configurada no .env.
+Veja o vídeo tutorial de instalação:
+https://www.youtube.com/watch?v=FbAbltEPDHQ
+
+Passo 6:
+Se necessário, configure o proxy de http://127.0.0.1:PORT (a porta configurada no .env) para https://(o domínio onde a aplicação irá rodar)
+
+Nota:
+Acesso ao painel admin: https://yourdomain.com/admin/login
+Login: admin@admin.com
+Senha: Password@123
+
