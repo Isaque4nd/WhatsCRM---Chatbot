@@ -6,6 +6,7 @@
     "express": "^5.1.0",
     "express-fileupload": "^1.5.2",
     "moment-timezone": "^0.6.0",
+    "multer": "^2.0.2",
     "mysql2": "^3.14.3",
     "node-fetch": "^3.3.2",
     "pg": "^8.16.3",
