@@ -2,3 +2,63 @@
 /WhatsCRM - Chatbot.zip
 /.env
 /Guia de Instalação.txt
+# ========================
+# Node.js
+# ========================
+node_modules
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+.pnpm-debug.log
+
+# ========================
+# Ambiente / Configuração
+# ========================
+.env
+.env.local
+.env.*.local
+
+# ========================
+# Sistema operacional
+# ========================
+.DS_Store
+Thumbs.db
+
+# ========================
+# Logs
+# ========================
+logs
+*.log
+*.log.*
+log.txt
+
+# ========================
+# Cache e builds temporários
+# ========================
+.cache
+dist
+tmp
+temp
+
+# ========================
+# React (client)
+# ========================
+upload_this/client/build
+upload_this/client/.cache
+
+# ========================
+# Uploads / Arquivos temporários
+# ========================
+upload_this/uploads
+upload_this/tmp
+upload_this/temp
+
+# ========================
+# IDEs
+# ========================
+.vscode
+.idea
+*.swp
