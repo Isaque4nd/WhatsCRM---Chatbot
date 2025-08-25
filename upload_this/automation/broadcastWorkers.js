@@ -4,7 +4,7 @@ const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 const { query } = require("../database/dbpromise.js");
 const { enviarMensagemTextoOuMidia, enviarDocumentoParaSessao } = require("../functions/sender"); // NOVO
-const { parseDelimitedMaybeCSV } = require("../helper/csv"); // NOVO helper simples abaixo
+const { parseDelimitedMaybeCSV } = require("../helper/utils/csv.js"); // NOVO helper simples abaixo
 const os = require("os");
 
 // ---------------- utils ----------------
