@@ -3,7 +3,7 @@ const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
 const validateUser = require("../middlewares/user.js");
-const { processarPlanilha } = require("../automation/broadcastWorker");
+const { processarPlanilha } = require("../automation/broadcastWorkers.js");
 
 const router = express.Router();
 
