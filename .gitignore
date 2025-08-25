@@ -1,11 +1,11 @@
 /relatorio_refatoracao_whatscrm_chatbot.md.pdf
 /WhatsCRM - Chatbot.zip
-/.env
+/upload_this/.env
 /Guia de Instalação.txt
 # ========================
 # Node.js
 # ========================
-node_modules
+/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -46,15 +46,15 @@ temp
 # ========================
 # React (client)
 # ========================
-upload_this/client/build
+/upload_this/client/build
 upload_this/client/.cache
 
 # ========================
 # Uploads / Arquivos temporários
 # ========================
-upload_this/uploads
-upload_this/tmp
-upload_this/temp
+/upload_this/uploads
+/upload_this/tmp
+/upload_this/temp
 
 # ========================
 # IDEs
