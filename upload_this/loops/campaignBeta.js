@@ -193,8 +193,8 @@ async function processSingleCampaign(campaign) {
         `UPDATE beta_campaign_logs 
          SET status = 'PENDING', 
              retry_count = retry_count + 1,
-             error_message = CONCAT('Retry #', retry_count + 1, ': ', IFNULL(error_message, '')) 
-         WHERE id IN (?)`,
+             error_message = 'Retry #' || (retry_count + 1) || ': ' || COALESCE(error_message, '') 
+         WHERE id = ANY($1::int[])`,
         [failedIds]
       );
 
@@ -251,12 +251,16 @@ async function processSingleCampaign(campaign) {
       contact.mobile,
       "PENDING",
     ]);
+    const flatValues = values.flat();
+    const placeholders = values
+      .map((_, i) => `($${i * 5 + 1}, $${i * 5 + 2}, $${i * 5 + 3}, $${i * 5 + 4}, $${i * 5 + 5})`)
+      .join(", ");
 
     await query(
       `INSERT INTO beta_campaign_logs 
        (uid, campaign_id, contact_name, contact_mobile, status) 
-       VALUES ?`,
-      [values]
+       VALUES ${placeholders}`,
+      flatValues
     );
 
     console.log(
@@ -265,7 +269,7 @@ async function processSingleCampaign(campaign) {
 
     // Get the newly created logs
     const newLogs = await query(
-      "SELECT * FROM beta_campaign_logs WHERE campaign_id = ? AND status = 'PENDING' LIMIT ?",
+      "SELECT * FROM beta_campaign_logs WHERE campaign_id = $1 AND status = 'PENDING' LIMIT $2",
       [campaign.campaign_id, CONFIG.batchSize]
     );
 
@@ -293,7 +297,7 @@ async function processLogsForCampaign(campaign, logs) {
     // Bulk update all logs as failed
     const logIds = logs.map((log) => log.id);
     await query(
-      "UPDATE beta_campaign_logs SET status = 'FAILED', error_message = 'Meta API credentials not found' WHERE id IN (?)",
+      "UPDATE beta_campaign_logs SET status = 'FAILED', error_message = 'Meta API credentials not found' WHERE id = ANY($1::int[])",
       [logIds]
     );
 
@@ -403,18 +407,14 @@ async function processLogsForCampaign(campaign, logs) {
   // Bulk update successful logs
   if (successfulLogs.length > 0) {
     for (const batch of chunkArray(successfulLogs, 100)) {
-      const updates = batch
-        .map((log) => `WHEN ${log.id} THEN '${log.messageId}'`)
-        .join(" ");
-
       const ids = batch.map((log) => log.id);
+      const messageIds = batch.map((log) => log.messageId);
 
       await query(
         `UPDATE beta_campaign_logs 
-         SET status = 'SENT', 
-             meta_msg_id = CASE id ${updates} END
-         WHERE id IN (?)`,
-        [ids]
+         SET status = 'SENT', meta_msg_id = $2
+         WHERE id = ANY($1::int[])`,
+        [ids, messageIds[0]]
       );
     }
 
@@ -432,18 +432,14 @@ async function processLogsForCampaign(campaign, logs) {
   // Bulk update failed logs
   if (failedLogs.length > 0) {
     for (const batch of chunkArray(failedLogs, 100)) {
-      const updates = batch
-        .map((log) => `WHEN ${log.id} THEN ${mysql.escape(log.error)}`)
-        .join(" ");
-
       const ids = batch.map((log) => log.id);
+      const errors = batch.map((log) => log.error);
 
       await query(
         `UPDATE beta_campaign_logs 
-         SET status = 'FAILED', 
-             error_message = CASE id ${updates} END
-         WHERE id IN (?)`,
-        [ids]
+         SET status = 'FAILED', error_message = $2
+         WHERE id = ANY($1::int[])`,
+        [ids, errors[0]]
       );
     }
 
