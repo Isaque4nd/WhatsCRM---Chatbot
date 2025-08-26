@@ -18,6 +18,8 @@
 -- Table structure for table "admin"
 --
 
+DROP DATABASE IF EXISTS "whatscrm";
+
 CREATE TABLE "admin" (
   "id" SERIAL PRIMARY KEY,
   "email" TEXT DEFAULT NULL,
