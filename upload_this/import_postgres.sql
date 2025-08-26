@@ -24,7 +24,7 @@ CREATE TABLE "admin" (
   "password" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "role" TEXT NOT NULL DEFAULT 'admin',
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -145,7 +145,7 @@ CREATE TABLE "beta_campaign" (
   "button_variables" JSONB DEFAULT NULL,
   "schedule" TIMESTAMP DEFAULT NULL,
   "timezone" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -172,7 +172,7 @@ CREATE TABLE "beta_campaign_logs" (
   "delivery_status" TEXT DEFAULT NULL,
   "delivery_time" TEXT DEFAULT NULL,
   "error_message" JSONB DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -207,7 +207,7 @@ CREATE TABLE "beta_chatbot" (
   "active" INTEGER DEFAULT 1,
   "origin" JSONB DEFAULT NULL,
   "origin_id" JSONB DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 
@@ -433,7 +433,7 @@ CREATE TABLE "beta_flows" (
   "source" TEXT DEFAULT NULL,
   "name" TEXT DEFAULT NULL,
   "data" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -463,7 +463,7 @@ CREATE TABLE "broadcast" (
   "status" TEXT DEFAULT NULL,
   "schedule" TIMESTAMP DEFAULT NULL,
   "timezone" TEXT DEFAULT 'Asia/Kolkata',
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 
@@ -485,7 +485,7 @@ CREATE TABLE "broadcast_log" (
   "err" TEXT DEFAULT NULL,
   "example" TEXT DEFAULT NULL,
   "contact" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 
@@ -592,7 +592,7 @@ CREATE TABLE "contact" (
   "var3" TEXT DEFAULT NULL,
   "var4" TEXT DEFAULT NULL,
   "var5" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -616,7 +616,7 @@ CREATE TABLE "contact_form" (
   "name" TEXT DEFAULT NULL,
   "mobile" TEXT DEFAULT NULL,
   "content" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -635,7 +635,7 @@ CREATE TABLE "faq" (
   "id" SERIAL PRIMARY KEY,
   "question" TEXT DEFAULT NULL,
   "answer" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -703,7 +703,7 @@ CREATE TABLE "flow_session" (
   "flow_id" TEXT DEFAULT NULL,
   "sender_mobile" TEXT DEFAULT NULL,
   "data" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -803,7 +803,7 @@ CREATE TABLE "meta_api" (
   "access_token" TEXT DEFAULT NULL,
   "business_phone_number_id" TEXT DEFAULT NULL,
   "app_id" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -825,7 +825,7 @@ CREATE TABLE "meta_templet_media" (
   "templet_name" TEXT DEFAULT NULL,
   "meta_hash" TEXT DEFAULT NULL,
   "file_name" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -847,7 +847,7 @@ CREATE TABLE "orders" (
   "amount" TEXT DEFAULT NULL,
   "data" TEXT DEFAULT NULL,
   "s_token" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 
@@ -862,7 +862,7 @@ CREATE TABLE "page" (
   "image" TEXT DEFAULT NULL,
   "content" TEXT DEFAULT NULL,
   "permanent" INTEGER DEFAULT 0,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -885,7 +885,7 @@ INSERT INTO "page" ("id", "slug", "title", "image", "content", "permanent", "cre
 CREATE TABLE "partners" (
   "id" SERIAL PRIMARY KEY,
   "filename" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -911,7 +911,7 @@ CREATE TABLE "phonebook" (
   "id" SERIAL PRIMARY KEY,
   "name" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -966,7 +966,7 @@ CREATE TABLE "rooms" (
   "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "socket_id" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -1011,7 +1011,7 @@ CREATE TABLE "templets" (
   "content" TEXT DEFAULT NULL,
   "type" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -1032,7 +1032,7 @@ CREATE TABLE "testimonial" (
   "description" TEXT DEFAULT NULL,
   "reviewer_name" TEXT DEFAULT NULL,
   "reviewer_position" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 
@@ -1055,7 +1055,7 @@ CREATE TABLE IF NOT EXISTS upload_jobs (
   created_at DATETIME NOT NULL,
   finished_at DATETIME NULL,
   INDEX(job_id),
-  INDEX(uid)
+  INDEX(uid);
 );
 
 -- Logs por número
@@ -1070,7 +1070,7 @@ CREATE TABLE IF NOT EXISTS upload_job_logs (
   created_at DATETIME NOT NULL,
   INDEX(job_id),
   INDEX(uid),
-  INDEX(numero)
+  INDEX(numero);
 );
 
 
@@ -1112,7 +1112,7 @@ CREATE TABLE "user" (
   "plan_expire" TEXT DEFAULT NULL,
   "trial" INTEGER DEFAULT 0,
   "api_key" TEXT DEFAULT NULL,
-  "createdAt" TIMESTAMP DEFAULT NOW()
+  "createdAt" TIMESTAMP DEFAULT NOW();
 ) ;
 
 --
@@ -1750,7 +1750,6 @@ ALTER TABLE "web_private"
 ALTER TABLE "web_public"
   MODIFY "id" SERIAL PRIMARY KEY, AUTO_INCREMENT=2;
 COMMIT;
-
 
 
 
