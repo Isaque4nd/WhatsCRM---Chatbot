@@ -19,7 +19,7 @@
 --
 
 CREATE TABLE "admin" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "email" TEXT DEFAULT NULL,
   "password" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
@@ -40,7 +40,7 @@ INSERT INTO "admin" ("id", "email", "password", "uid", "role", "createdAt") VALU
 --
 
 CREATE TABLE "agents" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "owner_uid" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "role" TEXT DEFAULT 'agent',
@@ -48,10 +48,10 @@ CREATE TABLE "agents" (
   "password" TEXT DEFAULT NULL,
   "name" TEXT DEFAULT NULL,
   "mobile" TEXT DEFAULT NULL,
-  "comments" longtext DEFAULT NULL,
+  "comments" TEXT DEFAULT NULL,
   "is_active" INTEGER DEFAULT 1,
-  "createdAt" timestamp NULL DEFAULT current_timestamp(),
-  "logs" longtext DEFAULT NULL
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  "logs" JSONB DEFAULT NULL
 ) ;
 
 --
@@ -67,11 +67,11 @@ INSERT INTO "agents" ("id", "owner_uid", "uid", "role", "email", "password", "na
 --
 
 CREATE TABLE "agent_chats" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "owner_uid" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "chat_id" TEXT DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -92,14 +92,14 @@ INSERT INTO "agent_chats" ("id", "owner_uid", "uid", "chat_id", "createdAt") VAL
 --
 
 CREATE TABLE "agent_task" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "owner_uid" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
-  "description" longtext DEFAULT NULL,
-  "agent_comments" longtext DEFAULT NULL,
+  "description" TEXT DEFAULT NULL,
+  "agent_comments" TEXT DEFAULT NULL,
   "status" TEXT DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -117,7 +117,7 @@ INSERT INTO "agent_task" ("id", "owner_uid", "uid", "title", "description", "age
 CREATE TABLE "auth" (
   "session" TEXT NOT NULL,
   "id" TEXT NOT NULL,
-  "value" longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid("value"))
+  "value" JSONB  DEFAULT NULL 
 ) ;
 
 
@@ -126,7 +126,7 @@ CREATE TABLE "auth" (
 --
 
 CREATE TABLE "beta_campaign" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "campaign_id" TEXT NOT NULL,
   "uid" TEXT NOT NULL,
   "title" TEXT NOT NULL,
@@ -140,10 +140,10 @@ CREATE TABLE "beta_campaign" (
   "delivered_count" INTEGER NOT NULL DEFAULT 0,
   "read_count" INTEGER NOT NULL DEFAULT 0,
   "failed_count" INTEGER NOT NULL DEFAULT 0,
-  "body_variables" longtext DEFAULT NULL,
-  "header_variable" longtext DEFAULT NULL,
-  "button_variables" longtext DEFAULT NULL,
-  "schedule" datetime DEFAULT NULL,
+  "body_variables" JSONB DEFAULT NULL,
+  "header_variable" JSONB DEFAULT NULL,
+  "button_variables" JSONB DEFAULT NULL,
+  "schedule" TIMESTAMP DEFAULT NULL,
   "timezone" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
@@ -162,7 +162,7 @@ INSERT INTO "beta_campaign" ("id", "campaign_id", "uid", "title", "template_name
 --
 
 CREATE TABLE "beta_campaign_logs" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT NOT NULL,
   "campaign_id" TEXT NOT NULL,
   "contact_name" TEXT NOT NULL,
@@ -171,7 +171,7 @@ CREATE TABLE "beta_campaign_logs" (
   "status" TEXT NOT NULL DEFAULT 'PENDING',
   "delivery_status" TEXT DEFAULT NULL,
   "delivery_time" TEXT DEFAULT NULL,
-  "error_message" longtext DEFAULT NULL,
+  "error_message" JSONB DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
 
@@ -199,14 +199,14 @@ INSERT INTO "beta_campaign_logs" ("id", "uid", "campaign_id", "contact_name", "c
 --
 
 CREATE TABLE "beta_chatbot" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "source" TEXT DEFAULT 'wa_chatbot',
   "title" TEXT DEFAULT NULL,
   "flow_id" TEXT DEFAULT NULL,
   "active" INTEGER DEFAULT 1,
-  "origin" longtext DEFAULT NULL,
-  "origin_id" TEXT DEFAULT NULL,
+  "origin" JSONB DEFAULT NULL,
+  "origin_id" JSONB DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
 
@@ -216,21 +216,21 @@ CREATE TABLE "beta_chatbot" (
 --
 
 CREATE TABLE "beta_chats" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "old_chat_id" TEXT DEFAULT NULL,
-  "profile" longtext DEFAULT NULL,
-  "origin_instance_id" TEXT DEFAULT NULL,
+  "profile" JSONB DEFAULT NULL,
+  "origin_instance_id" JSONB DEFAULT NULL,
   "chat_id" TEXT DEFAULT NULL,
-  "last_message" longtext DEFAULT NULL,
-  "chat_label" longtext DEFAULT NULL,
-  "chat_note" longtext DEFAULT NULL,
+  "last_message" JSONB DEFAULT NULL,
+  "chat_label" JSONB DEFAULT NULL,
+  "chat_note" JSONB DEFAULT NULL,
   "sender_name" TEXT DEFAULT NULL,
   "sender_mobile" TEXT DEFAULT NULL,
-  "unread_count" bigINTEGER DEFAULT 0,
-  "origin" TEXT DEFAULT NULL,
-  "assigned_agent" longtext DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "unread_count" BIGINT DEFAULT 0,
+  "origin" JSONB DEFAULT NULL,
+  "assigned_agent" JSONB DEFAULT NULL,
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -247,22 +247,22 @@ INSERT INTO "beta_chats" ("id", "uid", "old_chat_id", "profile", "origin_instanc
 --
 
 CREATE TABLE "beta_conversation" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "type" TEXT DEFAULT NULL,
   "chat_id" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "status" TEXT DEFAULT NULL,
   "metaChatId" TEXT DEFAULT NULL,
-  "msgContext" longtext DEFAULT NULL,
+  "msgContext" JSONB DEFAULT NULL,
   "reaction" TEXT DEFAULT NULL,
   "timestamp" TEXT DEFAULT NULL,
   "senderName" TEXT DEFAULT NULL,
   "senderMobile" TEXT DEFAULT NULL,
   "star" TEXT DEFAULT NULL,
   "route" TEXT DEFAULT NULL,
-  "context" longtext DEFAULT NULL,
-  "origin" TEXT DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "context" JSONB DEFAULT NULL,
+  "origin" JSONB DEFAULT NULL,
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -426,13 +426,13 @@ INSERT INTO "beta_conversation" ("id", "type", "chat_id", "uid", "status", "meta
 --
 
 CREATE TABLE "beta_flows" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "is_active" INTEGER DEFAULT 1,
   "uid" TEXT DEFAULT NULL,
   "flow_id" TEXT DEFAULT NULL,
   "source" TEXT DEFAULT NULL,
   "name" TEXT DEFAULT NULL,
-  "data" longtext DEFAULT NULL,
+  "data" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
 
@@ -454,14 +454,14 @@ INSERT INTO "beta_flows" ("id", "is_active", "uid", "flow_id", "source", "name",
 --
 
 CREATE TABLE "broadcast" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "broadcast_id" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
-  "templet" longtext DEFAULT NULL,
-  "phonebook" longtext DEFAULT NULL,
+  "templet" TEXT DEFAULT NULL,
+  "phonebook" TEXT DEFAULT NULL,
   "status" TEXT DEFAULT NULL,
-  "schedule" datetime DEFAULT NULL,
+  "schedule" TIMESTAMP DEFAULT NULL,
   "timezone" TEXT DEFAULT 'Asia/Kolkata',
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
@@ -472,7 +472,7 @@ CREATE TABLE "broadcast" (
 --
 
 CREATE TABLE "broadcast_log" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "broadcast_id" TEXT DEFAULT NULL,
   "templet_name" TEXT DEFAULT NULL,
@@ -482,9 +482,9 @@ CREATE TABLE "broadcast_log" (
   "send_to" TEXT DEFAULT NULL,
   "delivery_status" TEXT DEFAULT 'PENDING',
   "delivery_time" TEXT DEFAULT NULL,
-  "err" longtext DEFAULT NULL,
-  "example" longtext DEFAULT NULL,
-  "contact" longtext DEFAULT NULL,
+  "err" TEXT DEFAULT NULL,
+  "example" TEXT DEFAULT NULL,
+  "contact" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
 
@@ -494,16 +494,16 @@ CREATE TABLE "broadcast_log" (
 --
 
 CREATE TABLE "chatbot" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
   "for_all" INTEGER DEFAULT 0,
-  "chats" longtext DEFAULT NULL,
-  "flow" longtext DEFAULT NULL,
+  "chats" TEXT DEFAULT NULL,
+  "flow" TEXT DEFAULT NULL,
   "flow_id" TEXT DEFAULT NULL,
   "active" INTEGER DEFAULT 0,
   "createdAt" TIMESTAMP DEFAULT NOW(),
-  "origin" longtext DEFAULT NULL
+  "origin" JSONB DEFAULT NULL
 ) ;
 
 
@@ -512,21 +512,21 @@ CREATE TABLE "chatbot" (
 --
 
 CREATE TABLE "chats" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "chat_id" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "last_message_came" TEXT DEFAULT NULL,
-  "chat_note" longtext DEFAULT NULL,
-  "chat_tags" longtext DEFAULT NULL,
+  "chat_note" JSONB DEFAULT NULL,
+  "chat_tags" TEXT DEFAULT NULL,
   "sender_name" TEXT DEFAULT NULL,
   "sender_mobile" TEXT DEFAULT NULL,
   "chat_status" TEXT DEFAULT 'open',
   "is_opened" INTEGER DEFAULT 0,
-  "last_message" longtext DEFAULT NULL,
+  "last_message" JSONB DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW(),
-  "origin" TEXT DEFAULT 'meta',
-  "profile" longtext DEFAULT NULL,
-  "other" longtext DEFAULT NULL
+  "origin" JSONB DEFAULT 'meta',
+  "profile" JSONB DEFAULT NULL,
+  "other" TEXT DEFAULT NULL
 ) ;
 
 
@@ -535,11 +535,11 @@ CREATE TABLE "chats" (
 --
 
 CREATE TABLE "chat_tags" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "hex" TEXT DEFAULT NULL,
-  "title" longtext DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "title" TEXT DEFAULT NULL,
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -557,7 +557,7 @@ INSERT INTO "chat_tags" ("id", "uid", "hex", "title", "createdAt") VALUES
 --
 
 CREATE TABLE "chat_widget" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "unique_id" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
@@ -565,7 +565,7 @@ CREATE TABLE "chat_widget" (
   "logo" TEXT DEFAULT NULL,
   "place" TEXT DEFAULT NULL,
   "size" TEXT DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -581,7 +581,7 @@ INSERT INTO "chat_widget" ("id", "unique_id", "uid", "title", "whatsapp_number",
 --
 
 CREATE TABLE "contact" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "phonebook_id" TEXT DEFAULT NULL,
   "phonebook_name" TEXT DEFAULT NULL,
@@ -611,11 +611,11 @@ INSERT INTO "contact" ("id", "uid", "phonebook_id", "phonebook_name", "name", "m
 --
 
 CREATE TABLE "contact_form" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "email" TEXT DEFAULT NULL,
   "name" TEXT DEFAULT NULL,
   "mobile" TEXT DEFAULT NULL,
-  "content" longtext DEFAULT NULL,
+  "content" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
 
@@ -632,9 +632,9 @@ INSERT INTO "contact_form" ("id", "email", "name", "mobile", "content", "created
 --
 
 CREATE TABLE "faq" (
-  "id" INTEGER NOT NULL,
-  "question" longtext DEFAULT NULL,
-  "answer" longtext DEFAULT NULL,
+  "id" SERIAL PRIMARY KEY,
+  "question" TEXT DEFAULT NULL,
+  "answer" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
 
@@ -654,13 +654,13 @@ INSERT INTO "faq" ("id", "question", "answer", "createdAt") VALUES
 --
 
 CREATE TABLE "flow" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "flow_id" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW(),
-  "prevent_list" longtext DEFAULT NULL,
-  "ai_list" longtext DEFAULT NULL
+  "prevent_list" TEXT DEFAULT NULL,
+  "ai_list" TEXT DEFAULT NULL
 ) ;
 
 
@@ -669,13 +669,13 @@ CREATE TABLE "flow" (
 --
 
 CREATE TABLE "flow_data" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "uniqueId" TEXT DEFAULT NULL,
-  "inputs" longtext DEFAULT NULL,
-  "other" longtext DEFAULT NULL,
-  "meta_data" longtext DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "inputs" TEXT DEFAULT NULL,
+  "other" TEXT DEFAULT NULL,
+  "meta_data" TEXT DEFAULT NULL,
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -696,13 +696,13 @@ INSERT INTO "flow_data" ("id", "uid", "uniqueId", "inputs", "other", "meta_data"
 --
 
 CREATE TABLE "flow_session" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
-  "origin" TEXT DEFAULT NULL,
-  "origin_id" TEXT DEFAULT NULL,
+  "origin" JSONB DEFAULT NULL,
+  "origin_id" JSONB DEFAULT NULL,
   "flow_id" TEXT DEFAULT NULL,
   "sender_mobile" TEXT DEFAULT NULL,
-  "data" longtext DEFAULT NULL,
+  "data" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
 
@@ -728,11 +728,11 @@ INSERT INTO "flow_session" ("id", "uid", "origin", "origin_id", "flow_id", "send
 --
 
 CREATE TABLE "gen_links" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "wa_mobile" TEXT DEFAULT NULL,
   "email" TEXT DEFAULT NULL,
   "msg" TEXT DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -749,11 +749,11 @@ INSERT INTO "gen_links" ("id", "wa_mobile", "email", "msg", "createdAt") VALUES
 --
 
 CREATE TABLE "g_auth" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "label" TEXT DEFAULT NULL,
-  "url" longtext DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "url" TEXT DEFAULT NULL,
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -771,16 +771,16 @@ INSERT INTO "g_auth" ("id", "uid", "label", "url", "createdAt") VALUES
 --
 
 CREATE TABLE "instance" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
   "number" TEXT DEFAULT NULL,
   "uniqueId" TEXT DEFAULT NULL,
-  "qr" longtext DEFAULT NULL,
-  "data" longtext DEFAULT NULL,
-  "other" longtext DEFAULT NULL,
-  "status" longtext DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "qr" TEXT DEFAULT NULL,
+  "data" TEXT DEFAULT NULL,
+  "other" TEXT DEFAULT NULL,
+  "status" TEXT DEFAULT NULL,
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -796,7 +796,7 @@ INSERT INTO "instance" ("id", "uid", "title", "number", "uniqueId", "qr", "data"
 --
 
 CREATE TABLE "meta_api" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "waba_id" TEXT DEFAULT NULL,
   "business_account_id" TEXT DEFAULT NULL,
@@ -820,7 +820,7 @@ INSERT INTO "meta_api" ("id", "uid", "waba_id", "business_account_id", "access_t
 --
 
 CREATE TABLE "meta_templet_media" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "templet_name" TEXT DEFAULT NULL,
   "meta_hash" TEXT DEFAULT NULL,
@@ -841,11 +841,11 @@ INSERT INTO "meta_templet_media" ("id", "uid", "templet_name", "meta_hash", "fil
 --
 
 CREATE TABLE "orders" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "payment_mode" TEXT DEFAULT NULL,
   "amount" TEXT DEFAULT NULL,
-  "data" longtext DEFAULT NULL,
+  "data" TEXT DEFAULT NULL,
   "s_token" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
@@ -856,11 +856,11 @@ CREATE TABLE "orders" (
 --
 
 CREATE TABLE "page" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "slug" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
   "image" TEXT DEFAULT NULL,
-  "content" longtext DEFAULT NULL,
+  "content" TEXT DEFAULT NULL,
   "permanent" INTEGER DEFAULT 0,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
@@ -883,7 +883,7 @@ INSERT INTO "page" ("id", "slug", "title", "image", "content", "permanent", "cre
 --
 
 CREATE TABLE "partners" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "filename" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
 ) ;
@@ -908,7 +908,7 @@ INSERT INTO "partners" ("id", "filename", "createdAt") VALUES
 --
 
 CREATE TABLE "phonebook" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "name" TEXT DEFAULT NULL,
   "uid" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
@@ -930,16 +930,16 @@ INSERT INTO "phonebook" ("id", "name", "uid", "createdAt") VALUES
 --
 
 CREATE TABLE "plan" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "title" TEXT DEFAULT NULL,
-  "short_description" longtext DEFAULT NULL,
+  "short_description" TEXT DEFAULT NULL,
   "allow_tag" INTEGER DEFAULT 0,
   "allow_note" INTEGER DEFAULT 0,
   "allow_chatbot" INTEGER DEFAULT 0,
   "contact_limit" TEXT DEFAULT NULL,
   "allow_api" INTEGER DEFAULT 0,
   "is_trial" INTEGER DEFAULT 0,
-  "price" bigINTEGER DEFAULT NULL,
+  "price" BIGINT DEFAULT NULL,
   "price_strike" TEXT DEFAULT NULL,
   "plan_duration_in_days" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW(),
@@ -963,7 +963,7 @@ INSERT INTO "plan" ("id", "title", "short_description", "allow_tag", "allow_note
 --
 
 CREATE TABLE "rooms" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
   "socket_id" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
@@ -984,13 +984,13 @@ INSERT INTO "rooms" ("id", "uid", "socket_id", "createdAt") VALUES
 --
 
 CREATE TABLE "smtp" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "email" TEXT DEFAULT NULL,
   "host" TEXT DEFAULT NULL,
   "port" TEXT DEFAULT NULL,
   "password" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW(),
-  "username" longtext DEFAULT NULL
+  "username" TEXT DEFAULT NULL
 ) ;
 
 --
@@ -1006,9 +1006,9 @@ INSERT INTO "smtp" ("id", "email", "host", "port", "password", "createdAt", "use
 --
 
 CREATE TABLE "templets" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
-  "content" longtext DEFAULT NULL,
+  "content" TEXT DEFAULT NULL,
   "type" TEXT DEFAULT NULL,
   "title" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
@@ -1027,9 +1027,9 @@ INSERT INTO "templets" ("id", "uid", "content", "type", "title", "createdAt") VA
 --
 
 CREATE TABLE "testimonial" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "title" TEXT DEFAULT NULL,
-  "description" longtext DEFAULT NULL,
+  "description" TEXT DEFAULT NULL,
   "reviewer_name" TEXT DEFAULT NULL,
   "reviewer_position" TEXT DEFAULT NULL,
   "createdAt" TIMESTAMP DEFAULT NOW()
@@ -1091,7 +1091,7 @@ INSERT INTO "testimonial" ("id", "title", "description", "reviewer_name", "revie
 CREATE TABLE "undefined" (
   "session" TEXT NOT NULL,
   "id" TEXT NOT NULL,
-  "value" longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid("value"))
+  "value" JSONB  DEFAULT NULL 
 ) ;
 
 
@@ -1100,7 +1100,7 @@ CREATE TABLE "undefined" (
 --
 
 CREATE TABLE "user" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "role" TEXT DEFAULT 'user',
   "uid" TEXT DEFAULT NULL,
   "name" TEXT DEFAULT NULL,
@@ -1108,7 +1108,7 @@ CREATE TABLE "user" (
   "password" TEXT DEFAULT NULL,
   "mobile_with_country_code" TEXT DEFAULT NULL,
   "timezone" TEXT DEFAULT 'Asia/Kolkata',
-  "plan" longtext DEFAULT NULL,
+  "plan" TEXT DEFAULT NULL,
   "plan_expire" TEXT DEFAULT NULL,
   "trial" INTEGER DEFAULT 0,
   "api_key" TEXT DEFAULT NULL,
@@ -1128,11 +1128,11 @@ INSERT INTO "user" ("id", "role", "uid", "name", "email", "password", "mobile_wi
 --
 
 CREATE TABLE "warmers" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
-  "instances" longtext DEFAULT NULL,
+  "instances" TEXT DEFAULT NULL,
   "is_active" INTEGER DEFAULT 1,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -1148,10 +1148,10 @@ INSERT INTO "warmers" ("id", "uid", "instances", "is_active", "createdAt") VALUE
 --
 
 CREATE TABLE "warmer_script" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "uid" TEXT DEFAULT NULL,
-  "message" longtext DEFAULT NULL,
-  "createdAt" timestamp NULL DEFAULT current_timestamp()
+  "message" TEXT DEFAULT NULL,
+  "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ;
 
 --
@@ -1177,9 +1177,9 @@ INSERT INTO "warmer_script" ("id", "uid", "message", "createdAt") VALUES
 --
 
 CREATE TABLE "web_private" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "pay_offline_id" TEXT DEFAULT NULL,
-  "pay_offline_key" longtext DEFAULT NULL,
+  "pay_offline_key" TEXT DEFAULT NULL,
   "offline_active" INTEGER DEFAULT 0,
   "pay_stripe_id" TEXT DEFAULT NULL,
   "pay_stripe_key" TEXT DEFAULT NULL,
@@ -1209,13 +1209,13 @@ INSERT INTO "web_private" ("id", "pay_offline_id", "pay_offline_key", "offline_a
 --
 
 CREATE TABLE "web_public" (
-  "id" INTEGER NOT NULL,
+  "id" SERIAL PRIMARY KEY,
   "currency_code" TEXT DEFAULT NULL,
   "logo" TEXT DEFAULT NULL,
   "app_name" TEXT DEFAULT NULL,
   "custom_home" TEXT DEFAULT NULL,
   "is_custom_home" INTEGER DEFAULT 0,
-  "meta_description" longtext DEFAULT NULL,
+  "meta_description" TEXT DEFAULT NULL,
   "currency_symbol" TEXT DEFAULT NULL,
   "chatbot_screen_tutorial" TEXT DEFAULT NULL,
   "broadcast_screen_tutorial" TEXT DEFAULT NULL,
